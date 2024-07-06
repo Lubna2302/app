@@ -26,11 +26,17 @@ class StockDashboard extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              // Implement search functionality
+              print('Searching...');
+            },
           ),
           IconButton(
             icon: Icon(Icons.qr_code),
-            onPressed: () {},
+            onPressed: () {
+              // Implement QR code scanning functionality
+              print('Scanning QR code...');
+            },
           ),
           CircleAvatar(
             child: Text('A'),
@@ -55,9 +61,18 @@ class StockDashboard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildButton('Explore'),
-                _buildButton('Holdings'),
-                _buildButton('Aniket\'s Watchlist'),
+                _buildButton('Explore', Icons.explore, () {
+                  // Implement explore button action
+                  print('Exploring...');
+                }),
+                _buildButton('Holdings', Icons.account_balance_wallet, () {
+                  // Implement holdings button action
+                  print('Viewing holdings...');
+                }),
+                _buildButton('Lubna\'s Watchlist', Icons.star, () {
+                  // Implement Lubna's watchlist button action
+                  print('Viewing Lubna\'s watchlist...');
+                }),
               ],
             ),
             SizedBox(height: 16),
@@ -71,11 +86,13 @@ class StockDashboard extends StatelessWidget {
                 mainAxisSpacing: 16,
                 children: [
                   _buildStockCard(
-                      'NBCC (India)', '₹188', '+1.93 (1.03%)', Colors.green),
+                      'UCO Bank', '₹188.61', '+1.93 (1.03%)', Colors.green),
                   _buildStockCard(
-                      'HDFC Bank', '₹1,648', '-79.05 (4.58%)', Colors.red),
+                      'SBI', '₹1,648.10', '-79.05 (4.58%)', Colors.red),
                   _buildStockCard(
-                      'IRFC', '₹188', '+10.51 (5.91%)', Colors.green),
+                      'Amazon', '₹188.23', '+10.51 (5.91%)', Colors.green),
+                  _buildStockCard(
+                      'Myntra', '₹491.05', '+72.30 (17.27%)', Colors.green),
                 ],
               ),
             ),
@@ -116,15 +133,19 @@ class StockDashboard extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(String text) {
-    return ElevatedButton(
-      onPressed: () {},
-      child: Text(text),
+  Widget _buildButton(String text, IconData iconData, VoidCallback onPressed) {
+    return TextButton.icon(
+      onPressed: onPressed,
+      icon: Icon(iconData, color: Colors.blue),
+      label: Text(text, style: TextStyle(color: Colors.blue)),
     );
   }
 
   Widget _buildStockCard(
       String name, String value, String change, Color color) {
+    // Determine color based on change (positive or negative)
+    Color valueColor = change.startsWith('+') ? Colors.green : Colors.red;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -137,7 +158,7 @@ class StockDashboard extends StatelessWidget {
             Text(value,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(height: 8),
-            Text(change, style: TextStyle(color: color)),
+            Text(change, style: TextStyle(color: valueColor)),
           ],
         ),
       ),
